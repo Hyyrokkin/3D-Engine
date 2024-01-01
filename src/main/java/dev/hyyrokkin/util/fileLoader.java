@@ -11,7 +11,7 @@ import dev.hyyrokkin.structs.vec3D;
 
 public class fileLoader {
 	
-	private String path;
+	private final String path;
 	
 	public fileLoader(String path) {
 		this.path = path;
@@ -19,10 +19,8 @@ public class fileLoader {
 	
 	public mesh loadFile() {
 		mesh result = new mesh();
-		
-
 	        try{
-	            BufferedReader br = new BufferedReader(new FileReader(new File(path)));
+	            BufferedReader br = new BufferedReader(new FileReader(path));
 	            
 	            String[] line;
 	            String s;

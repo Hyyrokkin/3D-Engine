@@ -4,11 +4,7 @@ public class triangle {
 
 	public int[] v = new int[3];
 	public double col = 1;
-	
-	public triangle() {
-		
-	}
-	
+
 	public triangle(triangle tri) {
 		this.v[0] = tri.v[0];
 		this.v[1] = tri.v[1];

@@ -65,15 +65,6 @@ public class mathLib {
 		return result;
 	}
 	
-	public vec3D VectorDiv(vec3D v1, double k) {
-		vec3D result = new vec3D();
-		result.x = v1.x / k;
-		result.y = v1.y / k;
-		result.z = v1.z / k;
-		result.w = v1.w ;
-		return result;
-	}
-	
 	public double skalarProdukt(vec3D v1, vec3D v2) {		
 		return (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z);
 	}
@@ -164,26 +155,7 @@ public class mathLib {
 		projMat.m[3][3] = 0.0d;
 		return projMat;
 	}
-	
-	public matrix4x4 pointMat(vec3D pos, vec3D target, vec3D up) {
-		matrix4x4 pointMat = new matrix4x4();
-		
-		vec3D nF = VectorSub(target, pos);
-		nF = VerctorMakeUnit(nF);
-		
-		vec3D tmp = VectorMul(nF, skalarProdukt(up, nF));
-		vec3D nU = VectorSub(up, tmp);
-		nU = VerctorMakeUnit(nU);
-		
-		vec3D nR = VectorKreuzProdukt(nU, nF);
-		
-		pointMat.m[0][0] = nR.x;  pointMat.m[0][1] = nR.y;  pointMat.m[0][2] = nR.z;  pointMat.m[0][3] = 0;
-		pointMat.m[1][0] = nU.x;  pointMat.m[1][1] = nU.y;  pointMat.m[1][2] = nU.z;  pointMat.m[1][3] = 0;
-		pointMat.m[2][0] = nF.x;  pointMat.m[2][1] = nF.y;  pointMat.m[2][2] = nF.z;  pointMat.m[2][3] = 0;
-		pointMat.m[3][0] = pos.x; pointMat.m[3][1] = pos.y; pointMat.m[3][2] = pos.z; pointMat.m[3][3] = 1;
-		
-		return pointMat;
-	}
+
 	
 	public matrix4x4 lookMat(vec3D pos, vec3D target, vec3D up) {
 		matrix4x4 lookMat = new matrix4x4();
@@ -197,9 +169,9 @@ public class mathLib {
 		
 		vec3D nR = VectorKreuzProdukt(nU, nF);
 		
-		lookMat.m[0][0] = nR.x; 					 lookMat.m[0][1] = nU.x; 					  lookMat.m[0][2] = nF.x;  				   lookMat.m[0][3] = 0;
-		lookMat.m[1][0] = nR.y;  					 lookMat.m[1][1] = nU.y; 					  lookMat.m[1][2] = nF.y; 					   lookMat.m[1][3] = 0;
-		lookMat.m[2][0] = nR.z; 					 lookMat.m[2][1] = nU.z; 					  lookMat.m[2][2] = nF.z; 					   lookMat.m[2][3] = 0;
+		lookMat.m[0][0] = nR.x; 					lookMat.m[0][1] = nU.x; 					lookMat.m[0][2] = nF.x;  				    lookMat.m[0][3] = 0;
+		lookMat.m[1][0] = nR.y;  					lookMat.m[1][1] = nU.y; 					lookMat.m[1][2] = nF.y; 					lookMat.m[1][3] = 0;
+		lookMat.m[2][0] = nR.z; 					lookMat.m[2][1] = nU.z; 					lookMat.m[2][2] = nF.z; 					lookMat.m[2][3] = 0;
 		lookMat.m[3][0] = -skalarProdukt(pos , nR); lookMat.m[3][1] = -skalarProdukt(pos , nU); lookMat.m[3][2] = -skalarProdukt(pos , nF); lookMat.m[3][3] = 1;
 		
 		return lookMat;

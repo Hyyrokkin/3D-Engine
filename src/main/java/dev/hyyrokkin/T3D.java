@@ -28,13 +28,11 @@ public class T3D extends JPanel implements ActionListener{
 	
 	int width = 1600;
 	int height = 1000;
-	float xScale = 1f;
-	float yScale = 1f;
 	int fps = 60;
-	double dTheta = 00;
+	double dTheta = 0;
 	double dYaw = 0;
 	
-	String path = "bin/dev/hyyrokkin/seahorse.obj";
+	String path = "src/main/java/dev/hyyrokkin/lambo.obj";
 	Boolean wireframe = true;
 	
 	mesh mesh = new mesh();
@@ -101,8 +99,7 @@ public class T3D extends JPanel implements ActionListener{
 		matrix4x4 camRotMat = lib.rotMatY(dYaw);
 		vLookDir = lib.MatrixVectorMult(camRotMat, vTarget);
 		vTarget = lib.VectorAdd(vCamera, vLookDir);
-		
-		//matrix4x4 pointMat = lib.pointMat(vCamera, vTarget, vUp);
+
 		matrix4x4 viewMat = lib.lookMat(vCamera, vTarget, vUp);
 		
 		for(vec3D vec : mesh.vertex) {
@@ -177,10 +174,7 @@ public class T3D extends JPanel implements ActionListener{
 		}
 		for(triangle tri : meshLit.tris) {
 			meshProjected.tris.add(new triangle(tri));
-		}	
-		
-		
- 
+		}
 	}
 
 	
@@ -234,13 +228,11 @@ public class T3D extends JPanel implements ActionListener{
 			int ofset = 20;
 			g2D.setColor(new Color(ofset + val, ofset + val, ofset + val));
 			g2D.fillPolygon(xPoints, yPoints, nPoints);
-			if(wireframe == true) {
+			if(wireframe) {
 				g2D.setColor(new Color(0, 0, 0));
 				g2D.drawPolygon(xPoints, yPoints, nPoints);
 			}
 		}
-		
-		
 	}
 	
 	
@@ -248,42 +240,41 @@ public class T3D extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-    //dTheta += 1.0d/fps ;
+    	//dTheta += 1.0d/fps ;
 		
-	if(IsKeyPressed.isSpacePressed()) {
-		vCamera.y -= 1.0d * 2.0d/fps; 
-	}
-	if(IsKeyPressed.isControlPressed()) {
-		vCamera.y += 1.0d * 2.0d/fps; 
-	}
-	if(IsKeyPressed.isAPressed()) {
-		vCamera = lib.VectorAdd(vCamera, lib.VectorMul(lib.VectorKreuzProdukt(vLookDir, new vec3D(0, 1, 0)), 0.05d));
-	}
-	if(IsKeyPressed.isDPressed()) {
-		vCamera = lib.VectorSub(vCamera, lib.VectorMul(lib.VectorKreuzProdukt(vLookDir, new vec3D(0, 1, 0)), 0.05d));
-	}
+		if(IsKeyPressed.isSpacePressed()) {
+			vCamera.y -= 1.0d * 2.0d/fps;
+		}
+		if(IsKeyPressed.isControlPressed()) {
+			vCamera.y += 1.0d * 2.0d/fps;
+		}
+		if(IsKeyPressed.isAPressed()) {
+			vCamera = lib.VectorAdd(vCamera, lib.VectorMul(lib.VectorKreuzProdukt(vLookDir, new vec3D(0, 1, 0)), 0.05d));
+		}
+		if(IsKeyPressed.isDPressed()) {
+			vCamera = lib.VectorSub(vCamera, lib.VectorMul(lib.VectorKreuzProdukt(vLookDir, new vec3D(0, 1, 0)), 0.05d));
+		}
 	
-	if(IsKeyPressed.isQPressed()) {
-		dYaw += 1.0d * 0.4d/fps; 
-	}
-	if(IsKeyPressed.isEPressed()) {
-		dYaw -= 1.0d * 0.4d/fps; 
-	}
+		if(IsKeyPressed.isQPressed()) {
+			dYaw += 1.0d * 0.4d/fps;
+		}
+		if(IsKeyPressed.isEPressed()) {
+			dYaw -= 1.0d * 0.4d/fps;
+		}
 	
-	vec3D vForward = lib.VectorMul(vLookDir, 16.0d * 1/fps);
+		vec3D vForward = lib.VectorMul(vLookDir, 16.0d * 1/fps);
 	
-	if(IsKeyPressed.isWPressed()) {
-		vCamera = lib.VectorAdd(vCamera, vForward);
-	}
-	if(IsKeyPressed.isSPressed()) {
-		vCamera = lib.VectorSub(vCamera, vForward);
-	}
+		if(IsKeyPressed.isWPressed()) {
+			vCamera = lib.VectorAdd(vCamera, vForward);
+		}
+		if(IsKeyPressed.isSPressed()) {
+			vCamera = lib.VectorSub(vCamera, vForward);
+		}
 	
 		
 		Update();
 		
 		repaint();
-	
 	}
 	
 }
